@@ -1,0 +1,110 @@
+### Working with geo location 2
+POST distance/typedistance/_delete_by_query
+{
+  "query": {
+    "match": {
+      "name": "Javac"
+    }
+  }
+}
+
+GET distance/_search
+
+POST distance/typedistance/_update_by_query
+{
+  "query": {
+    "term": {
+      "name": {
+        "value": "Teste"
+      }
+    }
+  },
+  "script": {
+    "source":"ctx._source.name = params.name",
+    "params":{
+     "name":"Nao sei"
+    }
+  }
+}
+
+GET distance/_search
+{
+  "query": {
+    "bool": {
+      "must_not": [
+        {"bool": {
+          "filter": {
+            "geo_distance": {
+              "distance": "5km",
+              "location": {
+                "lat": -30.564642135465,
+                "lon": -15.321654352454
+              }
+            }
+          }
+        }}
+      ]
+    }
+  }
+}
+POST distance/typedistance
+{
+"age":25,
+"name":"Javac",
+"location":{
+  "lat": -30.564642135465,
+  "lon": -15.321654352454
+}
+}
+
+PUT distance
+{
+ 
+  "settings": {
+    "number_of_replicas": 1,
+    "number_of_shards": 1
+  },
+  "mappings": {
+    "typedistance": {
+      "_source":{
+        "enabled":true
+      },
+      "properties":{
+        "name":{"type":"keyword"},
+        "age":{"type":"short"},
+        "location":{"type":"geo_point"}
+      }
+    }
+  }
+}
+
+
+
+
+PUT test_distance
+{
+  "settings": {
+    "number_of_shards": 1
+  }
+}
+
+GET test_distance/_mapping
+
+PUT test_distance
+{
+  "settings": {
+"number_of_replicas": 1,
+"number_of_shards": 1  
+  },
+  "mappings": {
+    "test":{
+      "_source":{
+        "enabled":true
+      },
+      "properties":{
+      "city":{"type":"keyword"},
+      "location":{"type":"geo_point"}
+      }
+    }
+  }
+}

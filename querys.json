@@ -1,0 +1,148 @@
+
+### Query range with match
+GET aggregated-2019.04.04/_search
+{
+  "timeout": "20s",
+  "query": {
+    "bool": {
+      "must": [{
+    "range": {
+      "timestamp": {
+        "gte": 1554382800000,
+        "lte": 1554386400000
+      }
+    }},
+    {
+     "match": {
+        "UserCode": {"query":" 101852257 103038388  103844931"}
+    }
+  }]
+
+}
+}
+}
+
+GET index_name-2019.02.24/_search
+{
+  "timeout": "20s",
+  "query": {
+    "bool": {
+      "must": [
+        {
+          "range": {
+          "timestamp": {
+            "gte": 1550995200000,
+            "lte": 1551047400000
+            }
+          }
+        },
+        {
+          "match": {
+          "UserCode": "212053172"
+        }
+          
+        }
+      ]
+    }
+  }
+}
+
+### Query with ranges
+GET index_name-2019.02.24/_search
+{
+  "version": true,
+  "query": {
+    "range": {
+      "timestamp": {
+        "gte": 1550984400000,
+        "lte": 1551052200000
+      }
+    }
+  }
+}
+
+### See index
+GET _cat/indices
+
+### Query with xpack
+GET _xpack/sql?format=json
+{
+  "query": "SELECT * FROM \"aggregated-2019.03.25\" ORDER BY timestamp LIMIT 10 "
+}
+
+### GET log-metrics-2019.05.29/_search?q=container_name:name_of_container
+
+### Query with aggregations and sort
+
+GET aggregated-2019.02.24/_search
+{
+  "version": true,
+  "timeout": "20000ms",
+  "query": {
+    "range": {
+      "timestamp": {
+        "gte": 1550966400000,
+        "lte": 1551052200000
+      }
+    }
+  },
+  "size": 0,
+  "sort": [
+    {
+      "timestamp": {
+        "order": "asc"
+      }
+    }
+  ],
+  "aggs": {
+    "value_filter": {
+      "filter": {
+        "bool": {
+          "filter": [
+            {
+              "bool": {
+                "filter": [
+                  {
+                    "range": {
+                      "value_approved": {
+                        "gt": 0
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    }
+  }
+}
+
+### Sum Aggregation
+
+"aggs": {
+    "sum_amount": {
+      "sum": {
+        "field": "total_amount"
+      }
+    }
+  }
+
+## Range with format
+GET aggregated-2019.02.24/_search
+{
+  "timeout": "20s",
+  "query": {
+    "range": {
+      "timestamp": {
+        "gte": "24/02/2019 10:00",
+        "lte": "24/02/2019 23:00",
+        "format": "dd/MM/yyyy HH:mm"
+      }
+    }
+  }
+}
+
+
+      

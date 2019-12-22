@@ -1,0 +1,90 @@
+### Working with geo location
+
+PUT test_distance
+{
+  "settings": {
+    "number_of_shards": 1
+  }
+}
+
+
+PUT test_distance
+{
+  "settings": {
+"number_of_replicas": 1,
+"number_of_shards": 1  
+  },
+  "mappings": {
+    "test":{
+      "_source":{
+        "enabled":true
+      },
+      "properties":{
+      "city":{"type":"keyword"},
+      "location":{"type":"geo_point"}
+      }
+    }
+  }
+}
+
+### Insert
+POST test_distance/test
+{
+   "city":"Piaui",
+   "location":{
+     "lat": -65.894698000000002,
+     "lon": -52.262471000000005
+   },
+   "name":"test"
+}
+
+### Search
+GET test_distance/_search
+
+{
+ "query": {
+   "bool": {
+     "filter": {
+       "geo_distance": {
+         "distance": "5km",
+         "location":[40.73,-74.1]
+       }
+     }
+   }
+ }
+}
+
+GET test_distance/teste/_search
+{
+  "query": {
+    "bool": {
+      "filter": {
+        "geo_distance": {
+          "distance": 100,
+          "location": {
+            "lat": 40.73,
+            "lon": -74.1
+          }
+        }
+      }
+    }
+  }
+}
+
+GET test_distance/test/_search
+{
+  "query": {
+    "bool": {
+      "filter": {
+        "geo_distance": {
+          "distance": "10km",
+          "location": {
+            "lat": -65.894698000000002,
+            "lon": -52.262471000000005
+          }
+        }
+      }
+    }
+  }
+}
+ 
