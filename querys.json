@@ -149,7 +149,7 @@ GET aggregated-2019.02.24/_search
   "query": {
     "query_string": {
       "fields": ["metric"],
-      "query": "(requests)"
+      "query": "(requests) OR (other)"
     }
   },
   "size": 0
