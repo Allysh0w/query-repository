@@ -154,4 +154,18 @@ GET aggregated-2019.02.24/_search
   },
   "size": 0
 }
-      
+ 
+## Bucket Aggregation
+{
+  "size": 0,
+  "aggs": {
+    "Count": {
+      "filters": {
+        "filters": {
+         "requests" : { "match" : { "metric" : "requests"   }},
+          "sucess" : { "match" : { "metric" : "success" }}
+          }
+      }
+    }
+  }
+}
