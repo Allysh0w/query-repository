@@ -189,3 +189,21 @@ GET aggregated-2019.02.24/_search
 ],
 "size": 5
 }
+
+## Terms query
+{
+ "query": {
+   "bool": {
+     "must": [
+       {
+         "term": {
+           "type.keyword": {
+             "value": "video"
+           }
+         }
+       }
+     ]
+   }
+ },
+ "size": 10
+}
