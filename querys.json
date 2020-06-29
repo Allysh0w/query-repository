@@ -190,7 +190,7 @@ GET aggregated-2019.02.24/_search
 "size": 5
 }
 
-## Terms query
+## Term query
 {
  "query": {
    "bool": {
@@ -206,4 +206,13 @@ GET aggregated-2019.02.24/_search
    }
  },
  "size": 10
+}
+
+## Terms query
+{
+"query": {
+  "bool": {
+    "must": [ { "terms": { "metric": [ "requests", "B", "C" ] } } ]
+  }
+}
 }
