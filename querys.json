@@ -216,3 +216,27 @@ GET aggregated-2019.02.24/_search
   }
 }
 }
+
+## count terms query
+{
+  "query": {
+    "bool": {
+      "must": [
+        {
+          "match": {
+            "metric.keyword": "sent_pipeline_ingest"
+          }
+        }
+      ]
+    }
+  }, 
+  "aggs": {
+    "ContentCount": {
+      "terms": {
+        "field": "type.keyword",
+        "size": 10
+      }
+    }
+  }
+  , "size": 0
+}
