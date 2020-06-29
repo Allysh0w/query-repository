@@ -169,3 +169,23 @@ GET aggregated-2019.02.24/_search
     }
   }
 }
+
+## Dist max elastic query 
+{
+ "query": {
+    "dis_max": {
+      "queries": [
+        { "match": { "type.keyword": "video" }}
+      ],
+      "tie_breaker": 0.3
+    }
+  }, 
+"sort": [
+  {
+    "@timestamp": {
+      "order": "desc"
+    }
+  }
+],
+"size": 5
+}
