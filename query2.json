@@ -19,3 +19,28 @@
     }
   }
 }
+
+
+# match with date filter 
+{
+"query": {
+  "bool": {
+    "must": [
+      {
+        "match": {
+          "subject.raw": "catastrofe"
+        }
+      }
+    ],
+    "filter": {
+      "range": {
+      "issued": {
+        "gte": "23/10/2020 00:00",
+        "lte": "23/10/2020 23:58",
+        "format": "dd/MM/yyyy HH:mm"
+      }
+    }
+    }
+  }
+}  
+}
